@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_workspace_term2/service/locations_service.dart';
 import 'package:flutter_workspace_term2/theme/theme.dart';
 import 'package:flutter_workspace_term2/utils/date_time_util.dart';
 import 'package:flutter_workspace_term2/widgets/actions/bla_button.dart';
-import 'package:intl/intl.dart';
 
 import '../../../model/ride/locations.dart';
 import '../../../model/ride_pref/ride_pref.dart';
@@ -109,8 +109,32 @@ class _RidePrefFormState extends State<RidePrefForm> {
   }
 
   Future<Location?> _selectLocation(BuildContext context) async {
-    // This Logic I will implement in Bla-005
-    return null; // And I will replace this with the actual location selection
+    return showDialog<Location>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select a location'),
+          content: SizedBox(
+            width: double.maxFinite,
+            height: 300,
+            child: ListView.builder(
+              itemCount: LocationsService.availableLocations.length,
+              itemBuilder: (context, index) {
+                final Location location =
+                    LocationsService.availableLocations[index];
+                return ListTile(
+                  title: Text(location.name),
+                  subtitle: Text(location.country.name.toString()),
+                  onTap: () {
+                    Navigator.of(context).pop(location);
+                  },
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
