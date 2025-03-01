@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_workspace_term2/screens/ride/ride_screen.dart';
 import 'package:flutter_workspace_term2/screens/ride_pref/widgets/ride_pref_form.dart';
@@ -18,7 +19,34 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: appTheme,
       // home: Scaffold(body: RidePrefScreen()),
-      home: Scaffold(body: RideScreen()),
+      // home: Scaffold(body: RideScreen()),
+      home: Scaffold(
+        body: Column(
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  children: [
+                    BlaButton(
+                      text: 'Request to book',
+                      onPressed: () => print('Request button pressed'),
+                      icon: CupertinoIcons.calendar_circle,
+                    ),
+                    const SizedBox(height: 20),
+                    BlaButton(
+                      text: 'Contack Volodia',
+                      onPressed: () => print('Contack Volodia'),
+                      icon: CupertinoIcons.bubble_left_bubble_right,
+                      isPrimary: false,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
