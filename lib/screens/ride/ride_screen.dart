@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_workspace_term2/model/ride_pref/ride_pref.dart';
 import 'package:flutter_workspace_term2/screens/ride/widgets/ride_card.dart';
 import 'package:flutter_workspace_term2/theme/theme.dart';
 
 class RideScreen extends StatelessWidget {
-  const RideScreen({super.key});
+  final RidePref initialRidePref;
+
+  const RideScreen({super.key, required this.initialRidePref});
 
 
   @override
