@@ -17,7 +17,7 @@ class AnimationUtils {
     return PageRouteBuilder<T>(
       transitionDuration:
           const Duration(milliseconds: transitionSpeed), // Animation speed
-      pageBuilder: (context, animation, secondaryAnimation) => screen,
+      pageBuilder: (context, animation,  secondaryAnimation) => screen,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var tween = Tween(begin: begin, end: end)
             .chain(CurveTween(curve: Curves.easeInOut));

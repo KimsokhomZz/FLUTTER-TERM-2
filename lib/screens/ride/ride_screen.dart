@@ -8,30 +8,48 @@ class RideScreen extends StatelessWidget {
 
   const RideScreen({super.key, required this.initialRidePref});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BlaColors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: BlaColors.neutralLight),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor: BlaColors.greyLight,
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: BlaColors.white,
+      //   leading: IconButton(
+      //     icon: Icon(Icons.arrow_back, color: BlaColors.neutralLight),
+      //     onPressed: () => Navigator.of(context).pop(),
+      //   ),
+      //   elevation: 0,
+      // ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.only(
+            left: BlaSpacings.m, right: BlaSpacings.m, top: BlaSpacings.s),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RideCard(),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: BlaSpacings.m),
+              decoration: BoxDecoration(
+                color: BlaColors.backgroundAccent,
+                borderRadius: BorderRadius.circular(BlaSpacings.radius),
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back, color: BlaColors.neutralLight),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ),
+            RideCard(
+              departure: initialRidePref.departure,
+              arrival: initialRidePref.arrival,
+              departureDate: initialRidePref.departureDate,
+              requestedSeats: initialRidePref.requestedSeats,
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-

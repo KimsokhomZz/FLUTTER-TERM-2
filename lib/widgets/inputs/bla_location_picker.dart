@@ -18,7 +18,8 @@ class BlaLocationPicker extends StatefulWidget {
 }
 
 class _BlaLocationPickerState extends State<BlaLocationPicker> {
-  List<Location> filteredLocations = [];
+  // List<Location> filteredLocations = [];
+  List<Location> filteredLocations = LocationsService.availableLocations;
 
   // ----------------------------------
   // Initialize the Form attributes
@@ -44,8 +45,7 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
   void onSearchChanged(String searchText) {
     List<Location> newSelection = [];
 
-    if (searchText.length > 1) {
-      // We start to search from 2 characters only.
+    if (searchText.isNotEmpty) {
       newSelection = getLocationsFor(searchText);
     }
 
@@ -54,10 +54,17 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
     });
   }
 
+  // List<Location> getLocationsFor(String text) {
+  //   return LocationsService.availableLocations
+  //       .where((location) =>
+  //           location.name.toUpperCase().contains(text.toUpperCase()))
+  //       .toList();
+  // }
   List<Location> getLocationsFor(String text) {
+    final query = text.trim().toLowerCase();
     return LocationsService.availableLocations
         .where((location) =>
-            location.name.toUpperCase().contains(text.toUpperCase()))
+            location.name.toLowerCase().contains(query))
         .toList();
   }
 
@@ -76,7 +83,12 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
           ),
 
           Expanded(
-            child: ListView.builder(
+            child: filteredLocations.isEmpty
+            ? Center(child: Text(
+              'No results found',
+              style: BlaTextStyles.body.copyWith(color: BlaColors.textLight),
+            ),)
+            : ListView.builder(
               itemCount: filteredLocations.length,
               itemBuilder: (ctx, index) => LocationTile(
                 location: filteredLocations[index],
@@ -160,6 +172,7 @@ class _BlaSearchBarState extends State<BlaSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: BlaSpacings.m),
       decoration: BoxDecoration(
         color: BlaColors.backgroundAccent,
         borderRadius:
@@ -168,17 +181,15 @@ class _BlaSearchBarState extends State<BlaSearchBar> {
       child: Row(
         children: [
           // Left icon
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: IconButton(
-              onPressed: widget.onBackPressed,
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: BlaColors.iconLight,
-                size: 16,
-              ),
+          IconButton(
+            onPressed: widget.onBackPressed,
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: BlaColors.iconLight,
+              size: 16,
             ),
           ),
+          SizedBox(width: BlaSpacings.s),
 
           Expanded(
             child: TextField(
