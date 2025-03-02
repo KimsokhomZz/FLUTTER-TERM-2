@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_workspace_term2/screens/ride/ride_screen.dart';
-import 'package:flutter_workspace_term2/screens/ride_pref/widgets/ride_pref_form.dart';
 import 'screens/ride_pref/ride_pref_screen.dart';
 import 'theme/theme.dart';
 
