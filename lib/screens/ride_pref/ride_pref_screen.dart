@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_workspace_term2/repository/locations_repository.dart';
 import 'package:flutter_workspace_term2/screens/ride/ride_screen.dart';
 import 'package:flutter_workspace_term2/utils/animations_util.dart';
 
@@ -17,7 +18,8 @@ const String blablaHomeImagePath = 'assets/images/blabla_home.png';
 /// - Or select a last entered ride preferences and launch a search on it
 ///
 class RidePrefScreen extends StatefulWidget {
-  const RidePrefScreen({super.key});
+  final LocationsRepository repository;
+  const RidePrefScreen({super.key, required this.repository});
 
   @override
   State<RidePrefScreen> createState() => _RidePrefScreenState();
@@ -51,7 +53,6 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
         // 2 - Foreground content
         Column(
           children: [
-            // SizedBox(height: 16),
             SizedBox(height: BlaSpacings.m),
             Text(
               "Your pick of rides at low price",
@@ -74,6 +75,7 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
                   RidePrefForm(
                     initialPreference: currentRidePreference,
                     onSubmit: onRidePrefSelected,
+                    repository: widget.repository,
                   ),
                   SizedBox(height: BlaSpacings.m),
 

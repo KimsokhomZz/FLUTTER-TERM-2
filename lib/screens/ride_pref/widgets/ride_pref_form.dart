@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_workspace_term2/screens/ride/ride_screen.dart';
+import 'package:flutter_workspace_term2/repository/locations_repository.dart';
 import 'package:flutter_workspace_term2/screens/ride_pref/widgets/ride_pref_input_tile.dart';
 import 'package:flutter_workspace_term2/utils/animations_util.dart';
 import 'package:flutter_workspace_term2/utils/date_time_util.dart';
@@ -22,11 +22,16 @@ import '../../../model/ride_pref/ride_pref.dart';
 /// The form can be created with an existing RidePref (optional).
 ///
 class RidePrefForm extends StatefulWidget {
-  const RidePrefForm(
-      {super.key, required this.initialPreference, required this.onSubmit});
+  const RidePrefForm({
+    super.key,
+    required this.initialPreference,
+    required this.onSubmit,
+    required this.repository,
+  });
 
   final RidePref? initialPreference;
   final Function(RidePref preference) onSubmit;
+  final LocationsRepository repository;
 
   @override
   State<RidePrefForm> createState() => _RidePrefFormState();
@@ -86,6 +91,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
     // 1- Select a location
     Location? selectedLocation = await _navigator(BlaLocationPicker(
       initLocation: departure,
+      repository: widget.repository,
     ));
 
     // 2- Update the form if needed
@@ -99,6 +105,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
     // 1- Select a location
     Location? selectedLocation = await _navigator(BlaLocationPicker(
       initLocation: arrival,
+      repository: widget.repository,
     ));
 
     // 2- Update the form if needed

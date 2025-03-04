@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_workspace_term2/model/ride/locations.dart';
-
-import '../../service/locations_service.dart';
+import 'package:flutter_workspace_term2/repository/locations_repository.dart';
 import '../../theme/theme.dart';
 
 ///
@@ -9,17 +8,20 @@ import '../../theme/theme.dart';
 ///
 class BlaLocationPicker extends StatefulWidget {
   final Location?
-      initLocation; // The picker can be triguer with an existing location name
+      initLocation; // The picker can be triguer with an existing location
+  final LocationsRepository repository;
 
-  const BlaLocationPicker({super.key, this.initLocation});
+  const BlaLocationPicker(
+      {super.key, this.initLocation, required this.repository});
 
   @override
   State<BlaLocationPicker> createState() => _BlaLocationPickerState();
 }
 
 class _BlaLocationPickerState extends State<BlaLocationPicker> {
-  // List<Location> filteredLocations = [];
-  List<Location> filteredLocations = LocationsService.availableLocations;
+  List<Location> filteredLocations = []; // location in filting
+  List<Location> availableLocations = []; // location data get from repository
+  // List<Location> filteredLocations = LocationsService.availableLocations;
 
   // ----------------------------------
   // Initialize the Form attributes
@@ -28,7 +30,11 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
   @override
   void initState() {
     super.initState();
+    // 1- Initial filteredLocations with data from repository
+    availableLocations = widget.repository.getLocations();
+    filteredLocations = availableLocations;
 
+    // 2- if the initLocation is provided then show location name in the filter
     if (widget.initLocation != null) {
       filteredLocations = getLocationsFor(widget.initLocation!.name);
     }
@@ -47,6 +53,9 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
 
     if (searchText.isNotEmpty) {
       newSelection = getLocationsFor(searchText);
+    } else {
+      newSelection =
+          availableLocations; // display all available location if users haven't search anything
     }
 
     setState(() {
@@ -54,17 +63,13 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
     });
   }
 
-  // List<Location> getLocationsFor(String text) {
-  //   return LocationsService.availableLocations
-  //       .where((location) =>
-  //           location.name.toUpperCase().contains(text.toUpperCase()))
-  //       .toList();
-  // }
   List<Location> getLocationsFor(String text) {
     final query = text.trim().toLowerCase();
-    return LocationsService.availableLocations
-        .where((location) =>
-            location.name.toLowerCase().contains(query))
+    // return LocationsService.availableLocations
+    //     .where((location) => location.name.toLowerCase().contains(query))
+    //     .toList();
+    return availableLocations
+        .where((location) => location.name.toLowerCase().contains(query))
         .toList();
   }
 
@@ -84,17 +89,20 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
 
           Expanded(
             child: filteredLocations.isEmpty
-            ? Center(child: Text(
-              'No results found',
-              style: BlaTextStyles.body.copyWith(color: BlaColors.textLight),
-            ),)
-            : ListView.builder(
-              itemCount: filteredLocations.length,
-              itemBuilder: (ctx, index) => LocationTile(
-                location: filteredLocations[index],
-                onSelected: onLocationSelected,
-              ),
-            ),
+                ? Center(
+                    child: Text(
+                      'No results found',
+                      style: BlaTextStyles.body
+                          .copyWith(color: BlaColors.textLight),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: filteredLocations.length,
+                    itemBuilder: (ctx, index) => LocationTile(
+                      location: filteredLocations[index],
+                      onSelected: onLocationSelected,
+                    ),
+                  ),
           ),
         ],
       ),

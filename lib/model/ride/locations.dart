@@ -4,7 +4,8 @@
 enum Country {
   france('France'),
   uk('United Kingdom'),
-  spain('Spain');
+  spain('Spain'),
+  cambodia('Cambodia');
 
   final String name;
 
@@ -20,7 +21,7 @@ class Location {
 
   const Location({required this.name, required this.country});
 
-    // Copy constructor
+  // Copy constructor
   Location.copy(Location other)
       : name = other.name,
         country = other.country;
