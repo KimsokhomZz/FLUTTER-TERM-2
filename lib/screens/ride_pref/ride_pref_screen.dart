@@ -81,7 +81,7 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
 
                   // 2.2 Optionally display a list of past preferences
                   SizedBox(
-                    height: 200, // Set a fixed height
+                    height: 250, // Set a fixed height
                     child: ListView.builder(
                       shrinkWrap: true, // Fix ListView height issue
                       physics: AlwaysScrollableScrollPhysics(),
