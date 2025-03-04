@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_workspace_term2/theme/theme.dart';
 
+///
+/// Button rendering for the whole application
+///
+
 class BlaButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_workspace_term2/screens/ride/ride_screen.dart';
+import 'package:flutter_workspace_term2/utils/animations_util.dart';
 
 import '../../model/ride_pref/ride_pref.dart';
 import '../../service/ride_prefs_service.dart';
@@ -22,12 +24,25 @@ class RidePrefScreen extends StatefulWidget {
 }
 
 class _RidePrefScreenState extends State<RidePrefScreen> {
-  onRidePrefSelected(RidePref ridePref) {
-    // 1 - Navigate to the rides screen (with a buttom to top animation)
+  onRidePrefSelected(RidePref newPreference) async {
+    // 1 - Update the current preference
+    RidePrefService.instance.setCurrentPreference(newPreference);
+
+    // 2 - Navigate to the rides screen (with a buttom to top animation)
+    await Navigator.of(context)
+        .push(AnimationUtils.createBottomToTopRoute(RidesScreen()));
+
+    // 3 - After wait  - Update the state   -- TODO MAKE IT WITH STATE MANAGEMENT
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    RidePref? currentRidePreference =
+        RidePrefService.instance.currentPreference;
+    List<RidePref> pastPreferences =
+        RidePrefService.instance.getPastPreferences();
+
     return Stack(
       children: [
         // 1 - Background  Image
@@ -36,7 +51,8 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
         // 2 - Foreground content
         Column(
           children: [
-            SizedBox(height: 16),
+            // SizedBox(height: 16),
+            SizedBox(height: BlaSpacings.m),
             Text(
               "Your pick of rides at low price",
               style: BlaTextStyles.heading.copyWith(color: Colors.white),
@@ -56,22 +72,22 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
                 children: [
                   // 2.1 Display the Form to input the ride preferences
                   RidePrefForm(
-                    initRidePref: RidePrefService.currentRidePref,
+                    initialPreference: currentRidePreference,
+                    onSubmit: onRidePrefSelected,
                   ),
                   SizedBox(height: BlaSpacings.m),
 
                   // 2.2 Optionally display a list of past preferences
                   SizedBox(
-                    // height: 200, // Set a fixed height
-                    height: 250,
+                    height: 200, // Set a fixed height
                     child: ListView.builder(
                       shrinkWrap: true, // Fix ListView height issue
                       physics: AlwaysScrollableScrollPhysics(),
-                      itemCount: RidePrefService.ridePrefsHistory.length,
+                      itemCount: pastPreferences.length,
                       itemBuilder: (ctx, index) => RidePrefHistoryTile(
-                        ridePref: RidePrefService.ridePrefsHistory[index],
-                        onPressed: () => onRidePrefSelected(
-                            RidePrefService.ridePrefsHistory[index]),
+                        ridePref: pastPreferences[index],
+                        onPressed: () =>
+                            onRidePrefSelected(pastPreferences[index]),
                       ),
                     ),
                   ),

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_workspace_term2/theme/theme.dart';
 import 'package:flutter_workspace_term2/widgets/actions/bla_icon_button.dart';
 
+///
+/// This tile represents a selectable tile on the Ride Preference screen
+///
+
 class RidePrefInputTile extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -19,8 +23,8 @@ class RidePrefInputTile extends StatelessWidget {
     required this.text,
     required this.onPressed,
     required this.prefixIcon,
-    this.suffixIcon,
-    this.onSuffixIconPressed,
+    this.suffixIcon, //optional
+    this.onSuffixIconPressed, //optional
     this.isPlaceHolder = false,
   });
 

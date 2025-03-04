@@ -22,10 +22,11 @@ import '../../../model/ride_pref/ride_pref.dart';
 /// The form can be created with an existing RidePref (optional).
 ///
 class RidePrefForm extends StatefulWidget {
-  // The form can be created with an optional initial RidePref.
-  final RidePref? initRidePref;
+  const RidePrefForm(
+      {super.key, required this.initialPreference, required this.onSubmit});
 
-  const RidePrefForm({super.key, this.initRidePref});
+  final RidePref? initialPreference;
+  final Function(RidePref preference) onSubmit;
 
   @override
   State<RidePrefForm> createState() => _RidePrefFormState();
@@ -45,11 +46,12 @@ class _RidePrefFormState extends State<RidePrefForm> {
   void initState() {
     super.initState();
     // TODO
-    if (widget.initRidePref != null) {
-      departure = widget.initRidePref!.departure;
-      arrival = widget.initRidePref!.arrival;
-      departureDate = widget.initRidePref!.departureDate;
-      requestedSeats = widget.initRidePref!.requestedSeats;
+    if (widget.initialPreference != null) {
+      RidePref current = widget.initialPreference!;
+      departure = current.departure;
+      arrival = current.arrival;
+      departureDate = current.departureDate;
+      requestedSeats = current.requestedSeats;
     } else {
       departure = null;
       arrival = null;
@@ -70,7 +72,10 @@ class _RidePrefFormState extends State<RidePrefForm> {
 
   //* Handle date picker
   Future<void> _onSelectedDate() async {
+    // 1- Select a date
     final pickedDate = await _navigator(BlaDatePicker(initDate: departureDate));
+
+    // 2- Update the form if needed
     if (pickedDate != null) {
       setState(() => departureDate = pickedDate);
     }
@@ -78,39 +83,39 @@ class _RidePrefFormState extends State<RidePrefForm> {
 
   //* Handle select departure location
   void _onSelectDeparture() async {
+    // 1- Select a location
     Location? selectedLocation = await _navigator(BlaLocationPicker(
       initLocation: departure,
     ));
 
+    // 2- Update the form if needed
     if (selectedLocation != null) {
-      setState(() {
-        departure = selectedLocation;
-      });
+      setState(() => departure = selectedLocation);
     }
   }
 
   //* Handle select arrival location
   void _onSelectArrival() async {
+    // 1- Select a location
     Location? selectedLocation = await _navigator(BlaLocationPicker(
       initLocation: arrival,
     ));
 
+    // 2- Update the form if needed
     if (selectedLocation != null) {
-      setState(() {
-        arrival = selectedLocation;
-      });
+      setState(() => arrival = selectedLocation);
     }
   }
 
   //* Handle select num of seats
   void _onSelectSeat() async {
+    // 1- Choose the number of seats
     int? selectedSeat =
         await _navigator(RidePrefRequestSeat(requestedSeats: requestedSeats));
 
+    // 2- Update the form if needed
     if (selectedSeat != null) {
-      setState(() {
-        requestedSeats = selectedSeat;
-      });
+      setState(() => requestedSeats = selectedSeat);
     }
   }
 
@@ -118,33 +123,36 @@ class _RidePrefFormState extends State<RidePrefForm> {
   void _onSwitchLocations() {
     setState(() {
       if (departure != null && arrival != null) {
-        final Location temp = departure!;
-        departure = arrival;
-        arrival = temp;
+        Location temp = departure!;
+        departure = Location.copy(arrival!);
+        arrival = Location.copy(temp);
       }
     });
   }
 
   // * Handle on submit
   void _onSearchButtonPressed() {
-      //* 1 - Validate input
+    // 1- Validate input
     if (departure != null &&
         arrival != null &&
         departure != arrival &&
         requestedSeats > 0) {
-      //* 2 - Create new ride through input (if input valid)
-      final RidePref ridePref = RidePref(
+      // 2- Create new ride through input (if input valid)
+      final RidePref newPreference = RidePref(
         departure: departure!,
         departureDate: departureDate,
         arrival: arrival!,
         requestedSeats: requestedSeats,
       );
 
-      //* 3 - Navigate to ride screen
-      Navigator.of(context)
-          .push(AnimationUtils.createBottomToTopRoute(RideScreen(
-        initialRidePref: ridePref,
-      )));
+      //// 3 - Navigate to ride screen
+      // Navigator.of(context)
+      //     .push(AnimationUtils.createBottomToTopRoute(RideScreen(
+      //   initialRidePref: ridePref,
+      // )));
+
+      // 3 - Callback withg the new preference
+      widget.onSubmit(newPreference);
     }
   }
 
@@ -172,7 +180,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        //* 1 - Select Departure Location
+        //* 1- Select Departure Location
         RidePrefInputTile(
           isPlaceHolder: showDeparturePLaceHolder,
           text: departureLabel,
@@ -183,7 +191,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
         ),
         const BlaDivider(),
 
-        //* 2 - Select Arrival Location
+        //* 2- Select Arrival Location
         RidePrefInputTile(
           isPlaceHolder: showArrivalPLaceHolder,
           text: arrivalLabel,
@@ -192,7 +200,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
         ),
         const BlaDivider(),
 
-        //* 3 - Select Departure Date
+        //* 3- Select Departure Date
         RidePrefInputTile(
           text: dateLabel,
           prefixIcon: Icons.calendar_month,
@@ -200,7 +208,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
         ),
         const BlaDivider(),
 
-        //* 4 - Select Number Seats
+        //* 4- Select Number Seats
         RidePrefInputTile(
             text: requestedSeats.toString(),
             onPressed: _onSelectSeat,
@@ -208,7 +216,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
         BlaDivider(),
         const SizedBox(height: 16),
 
-        //* 5 - Submit Form by Clicking Search Button
+        //* 5- Submit Form by Clicking Search Button
         BlaButton(
           onPressed: _onSearchButtonPressed,
           text: 'Search',
