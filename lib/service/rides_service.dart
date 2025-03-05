@@ -50,7 +50,7 @@ class RidesService {
 
 ///
 ///   This class handles:
-///   - The filter
+///   - The filter the accept pets ride
 ///
 class RidesFilter {
   final bool acceptPets;
