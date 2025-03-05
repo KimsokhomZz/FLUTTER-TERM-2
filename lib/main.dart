@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_workspace_term2/repository/locations_repository.dart';
 import 'package:flutter_workspace_term2/repository/mock/mock_locations_repository.dart';
 import 'package:flutter_workspace_term2/repository/mock/mock_ride_preferences_repository.dart';
 import 'package:flutter_workspace_term2/repository/mock/mock_rides_repository.dart';
@@ -10,38 +9,28 @@ import 'service/ride_prefs_service.dart';
 import 'theme/theme.dart';
 
 void main() {
-  // 1 - Initialize the services
-  // RidePref Service
-  RidePrefService.initialize(MockRidePreferencesRepository());
-  // Ride Service
-  RidesService.initialize(MockRidesRepository());
-  // Location Service
+  // 1 - Initialize mock reposite to the service
   LocationsService.initialize(MockLocationsRepository());
-
-  // 2- get singleton instace of service
-  LocationsService locationService = LocationsService.instance;
-
-  // Test fetch mock location data
-  print("Available location:");
-  for (var location in locationService.getLocations()) {
-    print("${location.name} ${location.country.name}");
-  }
+  RidePrefService.initialize(MockRidePreferencesRepository());
+  RidesService.initialize(MockRidesRepository());
 
   // 3- Run the UI
-  // runApp(MyApp(repository: repository));
+  runApp(MyApp());
 }
 
-// class MyApp extends StatelessWidget {
-//   final LocationsRepository repository;
-//   const MyApp({super.key, required this.repository});
+class MyApp extends StatelessWidget {
+  const MyApp({
+    super.key,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       theme: appTheme,
-//       home: Scaffold(body: RidePrefScreen(repository: repository)),
-//     );
-//   }
-// }
-
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: appTheme,
+      home: Scaffold(
+          body:
+              RidePrefScreen(repository: LocationsService.instance.repository)),
+    );
+  }
+}

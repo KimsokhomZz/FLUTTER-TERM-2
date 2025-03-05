@@ -19,6 +19,7 @@ const String blablaHomeImagePath = 'assets/images/blabla_home.png';
 ///
 class RidePrefScreen extends StatefulWidget {
   final LocationsRepository repository;
+
   const RidePrefScreen({super.key, required this.repository});
 
   @override

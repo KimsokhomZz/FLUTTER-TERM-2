@@ -26,6 +26,14 @@ class LocationsService {
     _repository = repository;
   }
 
+  // expose repository for external use
+  LocationsRepository get repository {
+    if (_repository == null) {
+      throw Exception("LocationsService is not initialized.");
+    }
+    return _repository!;
+  }
+
   // get location data
   List<Location> getLocations() {
     return _repository!.getLocations();
