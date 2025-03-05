@@ -28,7 +28,8 @@ class _RidesScreenState extends State<RidesScreen> {
   final RidesFilter acceptPetsFilter = RidesFilter(acceptPets: true);
   List<Ride> get matchingRides => ridesService.getRides(
         currentPreference,
-        acceptPetsFilter
+        acceptPetsFilter,
+        RideSortType.duration
       );
 
   void onBackPressed() {

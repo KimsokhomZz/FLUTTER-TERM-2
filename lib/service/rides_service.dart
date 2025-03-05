@@ -43,8 +43,31 @@ class RidesService {
   }
 
   // Get rides
-  List<Ride> getRides(RidePref preference, RidesFilter? filter) {
-    return repository.getRides(preference, filter);
+  List<Ride> getRides(
+      RidePref preference, RidesFilter? filter, RideSortType? sortType) {
+    // 1- Get the rides from our ride repository
+    List<Ride> rides = repository.getRides(preference, filter);
+
+    // 2- if the sortType is provided, we sort the ride
+    if (sortType != null) {
+      switch (sortType) {
+        case RideSortType.departureDate:
+          rides.sort((a, b) => a.departureDate.compareTo(b.departureDate));
+          break;
+        case RideSortType.price:
+          rides.sort((a, b) => a.pricePerSeat.compareTo(b.pricePerSeat));
+          break;
+        case RideSortType.duration:
+          rides.sort(
+            (a, b) => (a.arrivalDateTime.difference(a.departureDate))
+                .compareTo(b.arrivalDateTime.difference(b.departureDate)),
+          );
+          break;
+      }
+    }
+
+    // 3- Return the rides
+    return rides;
   }
 }
 
@@ -56,4 +79,14 @@ class RidesFilter {
   final bool acceptPets;
 
   const RidesFilter({required this.acceptPets});
+}
+
+///
+///   This class handles:
+///   - Sorting for the Ride
+///
+enum RideSortType {
+  departureDate,
+  price,
+  duration,
 }
