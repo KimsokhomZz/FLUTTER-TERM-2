@@ -1,7 +1,6 @@
+// import '../dummy_data/dummy_data.dart';
 import 'package:flutter_workspace_term2/repository/rides_repository.dart';
-
 import '../model/ride_pref/ride_pref.dart';
-import '../dummy_data/dummy_data.dart';
 import '../model/ride/ride.dart';
 
 ///
@@ -52,7 +51,14 @@ class RidesService {
     if (sortType != null) {
       switch (sortType) {
         case RideSortType.departureDate:
-          rides.sort((a, b) => a.departureDate.compareTo(b.departureDate));
+          rides.sort((a, b) {
+            final dateComparison = a.departureDate.compareTo(b.departureDate);
+            if (dateComparison == 0) {
+              // In case that the departure date are the same, sort by available seats
+              return b.availableSeats.compareTo(a.availableSeats);
+            }
+            return dateComparison;
+          });
           break;
         case RideSortType.price:
           rides.sort((a, b) => a.pricePerSeat.compareTo(b.pricePerSeat));

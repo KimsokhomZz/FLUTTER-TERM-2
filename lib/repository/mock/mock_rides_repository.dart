@@ -28,8 +28,8 @@ class MockRidesRepository extends RidesRepository {
         departureLocation:
             Location(name: "Battambang", country: Country.cambodia),
         arrivalLocation: Location(name: "SiemReap", country: Country.cambodia),
-        departureDate: DateTime.now().copyWith(hour: 8, minute: 00),
-        arrivalDateTime: DateTime.now().copyWith(hour: 10, minute: 00),
+        departureDate: DateTime.now().copyWith(hour: 20, minute: 00),
+        arrivalDateTime: DateTime.now().copyWith(hour: 22, minute: 00),
         driver: User(
           firstName: 'Chaylim',
           lastName: 'Kh',
@@ -62,8 +62,8 @@ class MockRidesRepository extends RidesRepository {
         departureLocation:
             Location(name: "Battambang", country: Country.cambodia),
         arrivalLocation: Location(name: "SiemReap", country: Country.cambodia),
-        departureDate: DateTime.now().copyWith(hour: 8, minute: 00),
-        arrivalDateTime: DateTime.now().copyWith(hour: 10, minute: 00),
+        departureDate: DateTime.now().copyWith(hour: 20, minute: 00),
+        arrivalDateTime: DateTime.now().copyWith(hour: 22, minute: 00),
         driver: User(
           firstName: 'Limhao',
           lastName: 'Kps',
