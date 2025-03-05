@@ -20,6 +20,8 @@ class _RidePrefModalState extends State<RidePrefModal> {
     Navigator.of(context).pop();
   }
 
+  
+
   void onSubmit(RidePref newPreference) {
     // TODO 9 : We should pop this modal, with the new current preference
   }

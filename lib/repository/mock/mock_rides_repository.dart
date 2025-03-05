@@ -100,7 +100,11 @@ class MockRidesRepository extends RidesRepository {
     List<Ride> filteredRides = mockRides
         .where((ride) =>
             ride.departureLocation == preference.departure &&
-            ride.arrivalLocation == preference.arrival)
+            ride.arrivalLocation == preference.arrival &&
+            ride.departureDate.year == preference.departureDate.year &&
+            ride.departureDate.month == preference.departureDate.month &&
+            ride.departureDate.day == preference.departureDate.day &&
+            ride.availableSeats >= preference.requestedSeats)
         .toList();
 
     // Filter ride that accept pets
