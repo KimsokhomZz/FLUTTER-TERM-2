@@ -1,4 +1,4 @@
-import '../ride/locations.dart';
+import 'locations.dart';
 
 ///
 /// This model describes a ride preference.
