@@ -11,14 +11,15 @@ class CoursesMockRepository extends CoursesRepository {
 
   @override
   List<Course> getCourses() {
-    return _mockCourses; 
+    // I return a copy of the list instead of the original list
+    return _mockCourses;
   }
 
   @override
   Course getCourseFor(String courseId) {
     // return course with id and throw exception if the course not found
     return _mockCourses.firstWhere((course) => course.id == courseId,
-        orElse: () => throw Exception("Course cannot found"));
+        orElse: () => throw Exception("Course not found"));
   }
 
   @override

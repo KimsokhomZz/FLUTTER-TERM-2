@@ -34,7 +34,7 @@ class _CourseScreenState extends State<CourseScreen> {
   Widget build(BuildContext context) {
     // Get course through provider
     final Course course =
-        context.read<CoursesProvider>().getCourseFor(widget.courseId);
+        context.watch<CoursesProvider>().getCourseFor(widget.courseId);
     // Accese course's scores list
     final List<CourseScore> scores = course.scores;
 
@@ -45,7 +45,7 @@ class _CourseScreenState extends State<CourseScreen> {
         itemCount: scores.length,
         itemBuilder: (ctx, index) => ListTile(
           title: Text(scores[index].studentName),
-          trailing: Text(
+          trailing: Text( 
             scores[index].studenScore.toString(),
             style: TextStyle(
               color: scoreColor(scores[index].studenScore),

@@ -12,6 +12,7 @@ class MockPostRepository extends PostRepository {
     Post(id: 2, title: 'Who is the best?', description: 'Ronan is the best.'),
     Post(id: 3, title: 'State Management', description: 'Understand Provider.')
   ];
+  
   @override
   Future<List<Post>> getPosts() {
     return Future.delayed(Duration(seconds: 5), () {

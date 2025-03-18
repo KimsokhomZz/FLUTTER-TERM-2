@@ -18,11 +18,10 @@ class _CourseListScreenState extends State<CourseListScreen> {
   @override
   void initState() {
     super.initState();
-    // Access the coursesProvider
+    // 1- Access the coursesProvider
     final CoursesProvider coursesProvider = context.read<CoursesProvider>();
-    if (coursesProvider.courses.isEmpty) {
-      coursesProvider.fetchCourses(); // fetching the courses
-    } 
+    // 2- fetching the courses
+    coursesProvider.fetchCourses(); 
   }
 
   void _editCourse(String courseId) async {
@@ -37,8 +36,6 @@ class _CourseListScreenState extends State<CourseListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final CoursesProvider coursesProvider = context.read<CoursesProvider>();
-    coursesProvider.fetchCourses();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

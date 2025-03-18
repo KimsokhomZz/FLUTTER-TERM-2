@@ -11,7 +11,7 @@ class CoursesProvider extends ChangeNotifier {
   // Handle fetching all courses
   void fetchCourses() {
     // 1- I call repository to fetch the courses
-    _courses = _repository.getCourses();
+    _courses = List.from(_repository.getCourses());
     // 2- Notify listeners
     notifyListeners();
   }
@@ -25,7 +25,7 @@ class CoursesProvider extends ChangeNotifier {
   void addScore(String courseId, CourseScore score) {
     // 1- Adding new score to the course
     _repository.addScore(courseId, score);
-    // 2- Notify listeners
-    notifyListeners();
+    // 2- Fetching lastest data
+    fetchCourses();
   }
 }
