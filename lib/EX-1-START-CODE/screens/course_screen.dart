@@ -15,7 +15,6 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen> {
-  // List<CourseScore> get scores => widget.course.scores;
   void _addScore() async {
     CourseScore? newScore = await Navigator.of(context).push<CourseScore>(
       MaterialPageRoute(builder: (ctx) => const CourseScoreForm()),
@@ -35,7 +34,7 @@ class _CourseScreenState extends State<CourseScreen> {
   Widget build(BuildContext context) {
     // Get course through provider
     final Course course =
-        context.watch<CoursesProvider>().getCourseFor(widget.courseId);
+        context.read<CoursesProvider>().getCourseFor(widget.courseId);
     // Accese course's scores list
     final List<CourseScore> scores = course.scores;
 

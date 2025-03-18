@@ -20,7 +20,9 @@ class _CourseListScreenState extends State<CourseListScreen> {
     super.initState();
     // Access the coursesProvider
     final CoursesProvider coursesProvider = context.read<CoursesProvider>();
-    coursesProvider.fetchCourses(); // fetching the courses
+    if (coursesProvider.courses.isEmpty) {
+      coursesProvider.fetchCourses(); // fetching the courses
+    } 
   }
 
   void _editCourse(String courseId) async {
