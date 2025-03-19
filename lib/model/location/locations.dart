@@ -4,6 +4,7 @@
 enum Country {
   france('France'),
   uk('United Kingdom'),
+  cambodia('Cambodia'),
   spain('Spain');
 
   final String name;
@@ -20,6 +21,11 @@ class Location {
 
   const Location({required this.name, required this.country});
 
+  // Copy constructor
+  Location.copy(Location other)
+      : name = other.name,
+        country = other.country;
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -33,14 +39,4 @@ class Location {
   String toString() {
     return name;
   }
-}
-
-///
-/// This model describes a street.
-///
-class Street {
-  final String name;
-  final Location city;
-
-  const Street({required this.name, required this.city});
 }

@@ -1,5 +1,7 @@
-import '../model/ride_pref/ride_pref.dart';
-import '../dummy_data/dummy_data.dart';
+import 'package:flutter_workspace_term2/model/ride/ride_filter.dart';
+import 'package:flutter_workspace_term2/model/ride/ride_pref.dart';
+import 'package:flutter_workspace_term2/repository/rides_repository.dart';
+
 import '../model/ride/ride.dart';
 
 ////
@@ -7,18 +9,37 @@ import '../model/ride/ride.dart';
 ///   - The list of available rides
 ///
 class RidesService {
+  // Private instance
+  static RidesService? _instance;
 
-  static List<Ride> availableRides = fakeRides;   // TODO for now fake data
+  // Repository
+  final RidesRepository repository;
 
+  /// Private constructor
+  RidesService._internal(this.repository);
+
+  /// Initialize
+  static void initialize(RidesRepository repository) {
+    if (_instance == null) {
+      _instance = RidesService._internal(repository);
+    } else {
+      throw Exception("Rides Service is already initialized.");
+    }
+  }
+
+  /// Singleton accessor
+  static RidesService get instance {
+    if (_instance == null) {
+      throw Exception(
+          "Rides service is not initialized. Call initialize() first.");
+    }
+    return _instance!;
+  }
 
   ///
   ///  Return the relevant rides, given the passenger preferences
   ///
-  static List<Ride> getRidesFor(RidePref preferences) {
-    //  print(availableRides);
-    
-    // For now, just a test
-    return availableRides.where( (ride) => ride.departureLocation == preferences.departure && ride.arrivalLocation == preferences.arrival).toList();
+  List<Ride> getRidesFor(RidePreference pref, RideFilter? filter) {
+    return repository.getRidesFor(pref, filter);
   }
- 
 }
