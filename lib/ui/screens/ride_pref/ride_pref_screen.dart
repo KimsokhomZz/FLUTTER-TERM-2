@@ -5,7 +5,6 @@ import 'package:flutter_workspace_term2/ui/widgets/display/bla_error_screen.dart
 import 'package:provider/provider.dart';
 
 import '../../../model/ride/ride_pref.dart';
-// import '../../../service/ride_prefs_service.dart';
 import '../../theme/theme.dart';
 
 import '../../../utils/animations_util.dart';
@@ -86,7 +85,7 @@ class RidePrefScreen extends StatelessWidget {
 
                     // 2.2 Optionally display a list of past preferences
                     SizedBox(
-                      height: 200, // Set a fixed height
+                      height: 250, // Set a fixed height
                       child: ListView.builder(
                         shrinkWrap: true, // Fix ListView height issue
                         physics: AlwaysScrollableScrollPhysics(),
