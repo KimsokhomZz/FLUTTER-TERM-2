@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_workspace_term2/provider/async_value.dart';
-import 'package:flutter_workspace_term2/provider/ride_prefs_provider.dart';
+import 'package:flutter_workspace_term2/ui/provider/async_value.dart';
+import 'package:flutter_workspace_term2/ui/provider/ride_prefs_provider.dart';
 import 'package:flutter_workspace_term2/ui/widgets/display/bla_error_screen.dart';
 import 'package:provider/provider.dart';
 

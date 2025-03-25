@@ -1,6 +1,6 @@
 import 'package:flutter_workspace_term2/model/ride/ride_filter.dart';
 import 'package:flutter_workspace_term2/model/ride/ride_pref.dart';
-import 'package:flutter_workspace_term2/repository/rides_repository.dart';
+import 'package:flutter_workspace_term2/data/repository/rides_repository.dart';
 
 import '../model/ride/ride.dart';
 

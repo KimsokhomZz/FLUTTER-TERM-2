@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_workspace_term2/provider/ride_prefs_provider.dart';
-import 'package:flutter_workspace_term2/repository/mock/mock_ride_preferences_repository.dart';
+import 'package:flutter_workspace_term2/ui/provider/ride_prefs_provider.dart';
+import 'package:flutter_workspace_term2/data/repository/mock/mock_ride_preferences_repository.dart';
 import 'package:provider/provider.dart';
-import 'repository/mock/mock_locations_repository.dart';
-import 'repository/mock/mock_rides_repository.dart';
+import 'data/repository/mock/mock_locations_repository.dart';
+import 'data/repository/mock/mock_rides_repository.dart';
 import 'service/locations_service.dart';
 import 'service/rides_service.dart';
 

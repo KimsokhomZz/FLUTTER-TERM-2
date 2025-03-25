@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_workspace_term2/model/ride/ride_pref.dart';
-import 'package:flutter_workspace_term2/provider/async_value.dart';
-import 'package:flutter_workspace_term2/repository/ride_preferences_repository.dart';
+import 'package:flutter_workspace_term2/ui/provider/async_value.dart';
+import 'package:flutter_workspace_term2/data/repository/ride_preferences_repository.dart';
 
 class RidesPreferencesProvider extends ChangeNotifier {
   RidePreference? _currentPreference;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_workspace_term2/provider/ride_prefs_provider.dart';
+import 'package:flutter_workspace_term2/ui/provider/ride_prefs_provider.dart';
 import 'package:flutter_workspace_term2/service/rides_service.dart';
 import 'package:provider/provider.dart';
 import '../../../model/ride/ride_filter.dart';
