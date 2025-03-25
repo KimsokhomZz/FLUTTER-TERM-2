@@ -5,7 +5,7 @@ import 'package:flutter_workspace_term2/repository/ride_preferences_repository.d
 
 class RidesPreferencesProvider extends ChangeNotifier {
   RidePreference? _currentPreference;
-  AsyncValue<List<RidePreference>>? _pastPreferences;
+  AsyncValue<List<RidePreference>>? pastPreferences;
   final RidePreferencesRepository _repository;
   RidesPreferencesProvider({required RidePreferencesRepository repository})
       : _repository = repository {
@@ -25,27 +25,27 @@ class RidesPreferencesProvider extends ChangeNotifier {
   }
 
   void _addPreference(RidePreference newPreference) async {
-   _repository.addPreference(newPreference);
-   fetchPastPreferences();
+    await _repository.addPreference(newPreference);
+    fetchPastPreferences();
   }
 
   void fetchPastPreferences() async {
-    _pastPreferences = AsyncValue.loading();
+    pastPreferences = AsyncValue.loading();
     notifyListeners();
     try {
-      List<RidePreference> pastPrefs = _repository.getPastPreferences();
-      _pastPreferences = AsyncValue.success(pastPrefs);
+      List<RidePreference> pastPrefs = await _repository.getPastPreferences();
+      pastPreferences = AsyncValue.success(pastPrefs);
     } catch (e) {
-      _pastPreferences = AsyncValue.error(e);
+      pastPreferences = AsyncValue.error(e);
     }
     notifyListeners();
   }
 
   // History is returned from newest to oldest preference
   List<RidePreference> get preferencesHistory {
-    if (_pastPreferences?.data != null &&
-        _pastPreferences?.state == AsyncValueState.success) {
-      return _pastPreferences!.data!.reversed.toList();
+    if (pastPreferences?.data != null &&
+        pastPreferences?.state == AsyncValueState.success) {
+      return pastPreferences!.data!.reversed.toList();
     }
     return [];
   }
