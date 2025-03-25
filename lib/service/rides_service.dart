@@ -4,10 +4,11 @@ import 'package:flutter_workspace_term2/repository/rides_repository.dart';
 
 import '../model/ride/ride.dart';
 
-////
+///
 ///   This service handles:
 ///   - The list of available rides
 ///
+
 class RidesService {
   // Private instance
   static RidesService? _instance;

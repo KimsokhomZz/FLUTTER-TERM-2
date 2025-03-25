@@ -46,19 +46,26 @@ class _RidePrefFormState extends State<RidePrefForm> {
   @override
   void initState() {
     super.initState();
+    _initForm(widget.initialPreference);
+  }
 
-    if (widget.initialPreference != null) {
-      RidePreference current = widget.initialPreference!;
-      departure = current.departure;
-      arrival = current.arrival;
-      departureDate = current.departureDate;
-      requestedSeats = current.requestedSeats;
+  @override
+  void didUpdateWidget(RidePrefForm oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _initForm(widget.initialPreference);
+  }
+
+  void _initForm(RidePreference? initialPreference) {
+    if (initialPreference != null) {
+      departure = initialPreference.departure;
+      departureDate = initialPreference.departureDate;
+      arrival = initialPreference.arrival;
+      requestedSeats = initialPreference.requestedSeats;
     } else {
-      // If no given preferences, we select default ones :
-      departure = null; // User shall select the departure
-      departureDate = DateTime.now(); // Now  by default
-      arrival = null; // User shall select the arrival
-      requestedSeats = 1; // 1 seat book by default
+      departure = null;
+      departureDate = DateTime.now();
+      arrival = null;
+      requestedSeats = 1;
     }
   }
 
