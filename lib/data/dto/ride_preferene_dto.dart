@@ -7,7 +7,7 @@ class RidePreferenceDto {
       'departure': LocationDto.toJson(model.departure),
       'arrival': LocationDto.toJson(model.arrival),
       'departureDate': model.departureDate.toIso8601String(),
-      'requestedSeats': model.arrival,
+      'requestedSeats': model.requestedSeats,
     };
   }
 
